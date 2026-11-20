@@ -338,6 +338,7 @@ h2, h3 { line-height: 1.15; }
 
 .guest-route .workspace { grid-template-columns: minmax(0, 40rem); }
 .guest-route .hero-inner { min-height: 22rem; }
+.guest-route .hero .share-actions { display: none; }
 .guest-route .hero h1 { font-size: clamp(3.5rem, 6.4vw, 5.65rem); }
 
 .field-label, .invite-box label { display: block; margin-bottom: .4rem; color: var(--ink); font-weight: 650; }
