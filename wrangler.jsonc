@@ -7,7 +7,7 @@
     {
       "binding": "DB",
       "database_name": "evergreen-secret-santa",
-      "database_id": "00000000-0000-4000-8000-000000000000",
+      "database_id": "9b9de341-f989-4c7d-a4b4-20cfebfa59a1",
       "migrations_dir": "drizzle"
     }
   ]
