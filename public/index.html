@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14291f">
+  <meta name="description" content="Set up a Secret Santa gift exchange, draw names at random, and let everyone unwrap their own match once.">
+  <meta name="referrer" content="no-referrer">
+  <title>Secret Santa · Christmas gift exchange</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="wordmark" href="/" aria-label="Secret Santa home">
+        <span class="brand-mark" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+        Secret Santa
+      </a>
+      <a class="masthead-link" id="masthead-link" href="#how-it-works">How it works</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true"><img src="/assets/evergreen-cabin.jpg" alt="" fetchpriority="high"></div>
+      <div class="shell hero-inner">
+        <div class="hero-copy">
+          <div class="hero-stars" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
+          <h1 id="hero-title">Secret Santa<br><em>starts here.</em></h1>
+          <p id="hero-description">Set up your Christmas gift exchange, draw names at random, and share one link for everyone to unwrap their match.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell workspace">
+      <section class="paper-card" id="draw-card" aria-labelledby="setup-title">
+        <div id="setup-view">
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+            <div>
+              <h2 id="setup-title" tabindex="-1">Set up your draw</h2>
+              <p id="setup-help">Add at least 3 people. Use a nickname or initial if two people share a first name.</p>
+            </div>
+          </div>
+          <form id="setup-form" novalidate>
+            <div class="participant-list" id="participant-list" aria-describedby="setup-help"></div>
+            <button class="add-button" id="add-participant" type="button"><span aria-hidden="true">+</span> Add a Santa</button>
+            <p class="form-error" id="setup-error" role="alert" hidden></p>
+            <div class="form-actions">
+              <button class="primary-button" id="create-draw" type="submit"><span aria-hidden="true">✦</span> <span>Draw names</span></button>
+              <p><span class="icon icon-lock" aria-hidden="true"></span> Assignments stay hidden</p>
+            </div>
+          </form>
+        </div>
+
+        <div id="share-view" hidden>
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true"><span class="icon icon-check"></span></span>
+            <div>
+              <h2 id="share-title" tabindex="-1">Your draw is ready</h2>
+              <p id="share-summary"></p>
+            </div>
+          </div>
+          <div class="invite-box">
+            <label for="invite-link">Invite link</label>
+            <div class="invite-field">
+              <input id="invite-link" type="url" readonly spellcheck="false">
+              <button class="primary-button" id="copy-link" type="button"><span class="icon icon-link" aria-hidden="true"></span> Copy link</button>
+            </div>
+            <p class="copy-status" id="copy-status" role="status" hidden></p>
+          </div>
+          <div class="notice"><span class="icon icon-lock" aria-hidden="true"></span><p>Share this link only with your group. The first person to enter a participant’s name claims their reveal.</p></div>
+          <div class="share-actions">
+            <button class="add-button" id="new-draw" type="button">Start a new draw</button>
+            <button class="add-button" id="share-link" type="button" hidden>Share link</button>
+          </div>
+        </div>
+
+        <div id="guest-view" hidden>
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+            <div>
+              <h2 id="guest-title" tabindex="-1">Find your match</h2>
+              <p id="guest-description">Enter the first name or nickname your organiser used for you.</p>
+            </div>
+          </div>
+          <p class="loading-message" id="guest-loading" role="status">Opening your invitation…</p>
+          <form id="guest-form" novalidate hidden>
+            <label class="field-label" for="guest-name">Your first name</label>
+            <div class="name-field guest-field">
+              <span class="icon icon-person" aria-hidden="true"></span>
+              <input id="guest-name" type="text" required autocomplete="given-name" placeholder="First name or nickname" aria-describedby="guest-description reveal-warning">
+            </div>
+            <div class="notice" id="reveal-warning"><span class="icon icon-lock" aria-hidden="true"></span><p>You can open your match once. Be ready to write it down.</p></div>
+            <p class="form-error" id="guest-error" role="alert" hidden></p>
+            <div class="form-actions">
+              <button class="primary-button" id="reveal-draw" type="submit"><span aria-hidden="true">✦</span> <span>Reveal my match</span></button>
+            </div>
+          </form>
+        </div>
+
+        <div class="result-view" id="result-view" hidden>
+          <span class="result-illustration" aria-hidden="true"><span>✧</span><span class="icon icon-gift"><i></i></span><span>✦</span></span>
+          <h2 id="result-title" tabindex="-1">You’re buying a gift for</h2>
+          <p class="recipient" id="recipient-name"></p>
+          <p class="result-help">Write this name down before leaving. You can open your match only once.</p>
+          <div class="result-actions">
+            <a class="primary-button" href="/gift-ideas"><span class="icon icon-gift" aria-hidden="true"><i></i></span> Browse gift ideas</a>
+            <button class="add-button" id="close-reveal" type="button">Done</button>
+          </div>
+        </div>
+
+        <div class="result-view" id="closed-view" hidden>
+          <span class="card-icon" aria-hidden="true"><span class="icon icon-lock"></span></span>
+          <h2 id="closed-title" tabindex="-1">Your reveal is closed</h2>
+          <p class="result-help">Your match is sealed. Happy gifting!</p>
+          <div class="result-actions">
+            <a class="primary-button" href="/gift-ideas"><span class="icon icon-gift" aria-hidden="true"><i></i></span> Browse gift ideas</a>
+          </div>
+        </div>
+
+        <div id="missing-view" hidden>
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true"><span class="icon icon-link"></span></span>
+            <div>
+              <h2 id="missing-title" tabindex="-1">Invitation unavailable</h2>
+              <p id="missing-description"></p>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="primary-button" id="retry-draw" type="button" hidden>Try again</button>
+            <a class="add-button" href="/">Start your own draw</a>
+          </div>
+        </div>
+
+        <noscript><p class="form-error">Enable JavaScript to create a draw or reveal a match.</p></noscript>
+      </section>
+
+      <aside class="guide" id="how-it-works" aria-labelledby="guide-title">
+        <h2 id="guide-title">How it works</h2>
+        <ol class="guide-steps">
+          <li>
+            <span class="step-icon" aria-hidden="true"><span class="icon icon-person"></span></span>
+            <div><h3>Add your Santas</h3><p>Give everyone a unique name for the draw.</p></div>
+          </li>
+          <li>
+            <span class="step-icon" aria-hidden="true"><span class="step-spark">✦</span></span>
+            <div><h3>Draw names</h3><p>Everyone gives one gift and receives one. Nobody draws themselves.</p></div>
+          </li>
+          <li>
+            <span class="step-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+            <div><h3>Share the invite</h3><p>Each Santa enters their name to open their match once.</p></div>
+          </li>
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="shell footer" aria-hidden="true"><span></span><b>✦</b><span></span></footer>
+
+  <template id="participant-template">
+    <div class="participant-row">
+      <div class="name-field">
+        <span class="icon icon-person" aria-hidden="true"></span>
+        <label class="sr-only"></label>
+        <input type="text" required autocomplete="off" spellcheck="false" autocapitalize="words">
+      </div>
+      <button class="remove-button" type="button"><span aria-hidden="true">×</span></button>
+    </div>
+  </template>
+</body>
+</html>
