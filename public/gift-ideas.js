@@ -18,12 +18,26 @@ async function showAffiliateLinks() {
     if (!links || typeof links !== "object") return;
 
     const disclosure = document.getElementById("affiliate-disclosure");
-    for (const anchor of document.querySelectorAll("[data-gift-link]")) {
-      const href = httpsLink(links[anchor.dataset.giftLink]);
-      if (!href) continue;
+    for (const group of document.querySelectorAll("[data-gift-category]")) {
+      const category = links[group.dataset.giftCategory];
+      const entries = typeof category === "string"
+        ? [[group.dataset.defaultLabel, category]]
+        : Object.entries(category ?? {});
+
+      for (const [label, url] of entries) {
+        const href = httpsLink(url);
+        if (!href) continue;
+        const anchor = document.createElement("a");
+        anchor.className = "add-button";
+        anchor.href = href;
+        anchor.rel = "sponsored nofollow noopener noreferrer";
+        anchor.textContent = label;
+        group.append(anchor);
+      }
+
+      if (!group.childElementCount) continue;
+      group.hidden = false;
       disclosure.hidden = false;
-      anchor.href = href;
-      anchor.hidden = false;
     }
   } catch {
     // The gift suggestions remain available when shop links cannot be loaded.

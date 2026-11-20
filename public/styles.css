@@ -445,7 +445,8 @@ h2, h3 { line-height: 1.15; }
 .gift-idea:nth-child(even)::before { border-color: #426049; }
 .gift-idea h2 { font: 600 clamp(1.5rem, 2.3vw, 1.88rem)/1.08 var(--serif); letter-spacing: -.045em; }
 .gift-idea p { flex: 1; color: var(--muted); }
-.gift-idea a { margin-top: .35rem; }
+.gift-links { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .35rem; }
+.gift-links a { max-width: 100%; overflow-wrap: anywhere; }
 .gift-idea :focus-visible { outline-color: #426049; }
 
 .icon { position: relative; display: inline-block; flex: 0 0 auto; width: 1.12rem; height: 1.12rem; }

@@ -35,3 +35,32 @@ test('exposes only supported categories with HTTPS affiliate destinations', asyn
     },
   });
 });
+
+test('supports multiple labelled links alongside a single URL', async () => {
+  const response = await giftRequest('/api/gift-ideas', JSON.stringify({
+    cosy: {
+      ' Pyjamas ': 'https://example.test/pyjamas?tag=example',
+      Slippers: 'https://example.test/slippers',
+      Oodies: 'https://example.test/oodies',
+      ' ': 'https://example.test/blank-label',
+      Insecure: 'http://example.test/insecure',
+      Credentials: 'https://user:password@example.test',
+      Invalid: 'not a URL',
+      Missing: null,
+    },
+    food: 'https://example.test/food',
+    desk: { Invalid: '/items' },
+    experiences: ['https://example.test/workshops'],
+  }));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    links: {
+      cosy: {
+        Pyjamas: 'https://example.test/pyjamas?tag=example',
+        Slippers: 'https://example.test/slippers',
+        Oodies: 'https://example.test/oodies',
+      },
+      food: 'https://example.test/food',
+    },
+  });
+});

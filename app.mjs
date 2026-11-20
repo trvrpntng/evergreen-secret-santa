@@ -152,6 +152,16 @@ async function handleApi(request, path, store) {
   return problem(405, 'This request method is not supported.');
 }
 
+function affiliateUrl(value) {
+  if (typeof value !== 'string') return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
 function affiliateLinks(setting) {
   if (typeof setting !== 'string' || setting.length === 0) return {};
   let urls;
@@ -164,12 +174,16 @@ function affiliateLinks(setting) {
 
   const links = {};
   for (const category of giftCategories) {
-    if (!Object.hasOwn(urls, category) || typeof urls[category] !== 'string') continue;
-    try {
-      const url = new URL(urls[category]);
-      if (url.protocol === 'https:' && !url.username && !url.password) links[category] = url.href;
-    } catch {
-      // A malformed URL should not stop the other categories from appearing.
+    if (!Object.hasOwn(urls, category)) continue;
+    const value = urls[category];
+    if (typeof value === 'string') {
+      const url = affiliateUrl(value);
+      if (url) links[category] = url;
+    } else if (value && typeof value === 'object' && !Array.isArray(value)) {
+      const entries = Object.entries(value)
+        .map(([label, url]) => [label.trim(), affiliateUrl(url)])
+        .filter(([label, url]) => label && url);
+      if (entries.length) links[category] = Object.fromEntries(entries);
     }
   }
   return links;

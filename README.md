@@ -45,11 +45,15 @@ Commit the updated `wrangler.jsonc` to your repository. In **Workers & Pages**, 
 
 In **Workers & Pages**, open your Worker and add `GIFT_AFFILIATE_LINKS` as a **Text** variable under **Settings → Variables and Secrets**. Deploy the variable change to make it available to the gift ideas page. For local development, set the same environment variable before starting the Node server. [Worker runtime variables](https://developers.cloudflare.com/workers/configuration/environment-variables/)
 
-The value is a JSON object. Use one or more of the categories `cosy`, `food`, `games`, `books`, `desk` and `experiences`. Paste the full HTTPS affiliate URLs from your own programme in place of the examples.
+The value is a JSON object. Use one or more of the categories `cosy`, `food`, `games`, `books`, `desk` and `experiences`. Use a single URL for a category with one shop button, or an object that maps each button label to its URL for several buttons. Paste the full HTTPS affiliate URLs from your own programme in place of the examples.
 
 ```json
 {
-  "cosy": "https://example.com/your-cosy-gift-link",
+  "cosy": {
+    "Pyjamas": "https://example.com/your-pyjamas-link",
+    "Slippers": "https://example.com/your-slippers-link",
+    "Oodies": "https://example.com/your-oodies-link"
+  },
   "books": "https://example.com/your-book-link"
 }
 ```
