@@ -49,7 +49,12 @@
       <section class="paper-card" id="draw-card" aria-labelledby="setup-title">
         <div id="setup-view">
           <div class="card-heading">
-            <span class="card-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+            <span class="card-icon" aria-hidden="true">
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="M21.5 3.5h-3c-1.2 0-2.3.5-3.2 1.3l-5.6 5.3a1.35 1.35 0 0 0 1.8 2l3.3-2.7a3.9 3.9 0 0 0 4.3.7l2.4-1.2"/>
+                <path d="m9.4 10.6-4 1.3 1.2 3.6m5.6-3.2 1.1 3.2M2.5 15.5h19m-17.5 0L6 21h12l2-5.5"/>
+              </svg>
+            </span>
             <div>
               <h2 id="setup-title" tabindex="-1">Set up your draw</h2>
               <p id="setup-help">Add at least 3 people. Use a nickname or initial if two people share a first name.</p>
@@ -157,12 +162,30 @@
             <div><h3>Add your Santas</h3><p>Give everyone a unique name for the draw.</p></div>
           </li>
           <li>
-            <span class="step-icon" aria-hidden="true"><span class="step-spark">✦</span></span>
+            <span class="step-icon" aria-hidden="true">
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="M12 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                <path d="m10 12 7.5-7.5a1.65 1.65 0 0 1 2.3 0l.7.7a1.65 1.65 0 0 1 0 2.3L13 15l-4 1zM16 6l3 3M7 18c1.1-.9 1.7-.9 2.5 0s1.5.9 2.5 0 1.6-.9 2.4 0"/>
+              </svg>
+            </span>
             <div><h3>Draw names</h3><p>Everyone gives one gift and receives one. Nobody draws themselves.</p></div>
           </li>
           <li>
-            <span class="step-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+            <span class="step-icon" aria-hidden="true">
+              <svg class="line-icon" viewBox="0 0 24 24">
+                <path d="m8.2 10.7 7.6-4.4m-7.6 7 7.6 4.4"/>
+                <circle cx="6" cy="12" r="2.5"/>
+                <circle cx="18" cy="5" r="2.5"/>
+                <circle cx="18" cy="19" r="2.5"/>
+              </svg>
+            </span>
             <div><h3>Share the invite</h3><p>Each Santa enters their name to open their match once.</p></div>
+          </li>
+          <li>
+            <a class="guide-step-link" href="/gift-ideas" aria-labelledby="guide-gift-title">
+              <span class="step-icon" aria-hidden="true"><span class="icon icon-gift"><i></i></span></span>
+              <div><h3 id="guide-gift-title">Gift ideas</h3><p>Find a gift for your Secret Santa match.</p></div>
+            </a>
           </li>
         </ol>
       </aside>

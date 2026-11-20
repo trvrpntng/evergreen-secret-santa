@@ -317,9 +317,12 @@ h2, h3 { line-height: 1.15; }
 .guide { min-width: 0; padding-top: 2.2rem; }
 .guide h2 { color: var(--cream); font: 500 clamp(1.76rem, 3vw, 2.2rem)/1.12 var(--serif); letter-spacing: -.045em; }
 .guide-steps { display: grid; gap: 1.2rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
-.guide-steps li { display: grid; grid-template-columns: 2.64rem minmax(0, 1fr); gap: .85rem; align-items: start; }
+.guide-steps li, .guide-step-link { display: grid; grid-template-columns: 2.64rem minmax(0, 1fr); gap: .85rem; align-items: start; }
 .guide-steps h3 { margin: .07rem 0 .24rem; color: var(--cream); font-size: 1rem; font-weight: 650; }
 .guide-steps p { max-width: 21rem; color: #d2dbcb; }
+.guide-step-link { grid-column: 1 / -1; border-radius: .65rem; text-decoration: none; }
+.guide-step-link h3 { color: var(--gold); text-decoration: underline; text-underline-offset: .2em; }
+.guide-step-link:is(:hover, :focus-visible) .step-icon { border-color: var(--gold); background: #eddcba16; }
 
 .step-icon {
   width: 2.64rem;
@@ -330,7 +333,18 @@ h2, h3 { line-height: 1.15; }
   background: #eddcba08;
 }
 
-.step-spark { font-size: 1.32rem; line-height: 1; }
+.line-icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-icon .line-icon { width: 1.625rem; height: 1.625rem; }
 
 .footer { display: flex; align-items: center; gap: 1rem; padding-block: 2.65rem 1.85rem; color: var(--gold); }
 .footer span { flex: 1; height: 1px; background: #e6c49a31; }
