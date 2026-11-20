@@ -18,6 +18,16 @@ const securityHeaders = {
   'X-Content-Type-Options': 'nosniff',
 };
 
+const pageSecurityHeaders = {
+  ...securityHeaders,
+  'Content-Security-Policy': [
+    securityHeaders['Content-Security-Policy'],
+    "script-src 'self' 'sha256-Zeg5Nz+pzopIsNYcFhX5P8Wmmj+OGZfLshOkJMiiUBc=' https://www.googletagmanager.com",
+    "img-src 'self' https://www.googletagmanager.com https://*.google-analytics.com",
+    "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com",
+  ].join('; '),
+};
+
 const missingDraw = () => problem(404, 'This draw could not be found. Check the invitation link.', 'draw_not_found');
 
 function json(value, status = 200) {
@@ -185,7 +195,7 @@ export async function handleRequest(request, store, readAsset, giftAffiliateLink
     if (!content) return new Response('Page not found', { status: 404, headers: securityHeaders });
     return new Response(request.method === 'HEAD' ? null : content, {
       headers: {
-        ...securityHeaders,
+        ...(asset.endsWith('.html') ? pageSecurityHeaders : securityHeaders),
         'Content-Type': staticTypes.get(asset),
         'Cache-Control': asset === '/index.html' ? 'no-store' : 'no-cache',
       },

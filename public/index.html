@@ -6,6 +6,15 @@
   <meta name="theme-color" content="#14291f">
   <meta name="description" content="Set up a Secret Santa gift exchange, draw names at random, and let everyone unwrap their own match once.">
   <meta name="referrer" content="no-referrer">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    if (window.location.pathname.startsWith('/draw/')) {
+      gtag('set', 'page_location', window.location.origin + '/draw');
+    }
+    gtag('js', new Date());
+  </script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MGHMGP99"></script>
   <title>Secret Santa · Christmas gift exchange</title>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
